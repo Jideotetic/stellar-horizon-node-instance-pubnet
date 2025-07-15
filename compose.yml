@@ -1,0 +1,10 @@
+services:
+  horizon-pubnet:
+    build: .
+    ports:
+      - "8009:8000"
+    volumes:
+      - ./config:/opt/stellar
+    env_file:
+      - .env
+    restart: always
