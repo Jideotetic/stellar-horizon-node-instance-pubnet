@@ -1,8 +1,8 @@
 #!/bin/bash
 
-SERVICE_NAME="horizon-pubnet"
-APP_DIR="/home/jideotetic/horizon-pubnet"
-REPO_URL="git@github.com:Jideotetic/horizon-pubnet.git"
+SERVICE_NAME="stellar-horizon-node-instance-pubnet"
+APP_DIR="/home/jideotetic/stellar-horizon-node-instance-pubnet"
+REPO_URL="git@github.com:Jideotetic/stellar-horizon-node-instance-pubnet.git"
 DOCKER_COMPOSE_BIN="/usr/bin/docker compose"
 SERVICE_FILE="/etc/systemd/system/${SERVICE_NAME}.service"
 
@@ -36,7 +36,7 @@ After=docker.service
 Type=oneshot
 RemainAfterExit=true
 WorkingDirectory=$APP_DIR
-ExecStart=$DOCKER_COMPOSE_BIN up -d --build
+ExecStart=$DOCKER_COMPOSE_BIN up -d
 ExecStop=$DOCKER_COMPOSE_BIN down --volumes --remove-orphans
 TimeoutStartSec=0
 
