@@ -9,22 +9,22 @@ services:
       - .env
     restart: always
 
-  stellar-horizon-node-instance-pubnet2:
-    ports:
-      - "9000:8000"
-    image: jideotetic/stellar-horizon-node-instance-pubnet:latest
-    volumes:
-      - ./config:/opt/stellar
-    env_file:
-      - .env
-    restart: always
+  # stellar-horizon-node-instance-pubnet2:
+  #   ports:
+  #     - "9000:8000"
+  #   image: jideotetic/stellar-horizon-node-instance-pubnet:latest
+  #   volumes:
+  #     - ./config:/opt/stellar
+  #   env_file:
+  #     - .env
+  #   restart: always
 
-  stellar-horizon-node-instance-pubnet3:
-    ports:
-      - "9001:8000"
-    image: jideotetic/stellar-horizon-node-instance-pubnet:latest
-    volumes:
-      - ./config:/opt/stellar
-    env_file:
-      - .env
-    restart: always
+  # stellar-horizon-node-instance-pubnet3:
+  #   ports:
+  #     - "9001:8000"
+  #   image: jideotetic/stellar-horizon-node-instance-pubnet:latest
+  #   volumes:
+  #     - ./config:/opt/stellar
+  #   env_file:
+  #     - .env
+  #   restart: always
