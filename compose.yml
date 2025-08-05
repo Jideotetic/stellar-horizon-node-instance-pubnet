@@ -1,30 +1,71 @@
 services:
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: horizon-pubnet
+      POSTGRES_USER: horizon-pubnet
+      POSTGRES_PASSWORD: 3xjtiT5^B9gWY8Sy80nHOWEdlqp
+    volumes:
+      - /data/db
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U horizon-pubnet -d horizon-pubnet"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  migrate:
+    image: stellar-horizon-node-instance-pubnet
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./config:/opt/stellar
+    env_file:
+      - .env
+    entrypoint: ["stellar-horizon", "db", "migrate", "up"]
+    restart: "no"
+
   stellar-horizon-node-instance-pubnet1:
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+      postgres:
+        condition: service_healthy
     ports:
       - "8009:8000"
-    image: jideotetic/stellar-horizon-node-instance-pubnet:latest
+    image: stellar-horizon-node-instance-pubnet
     volumes:
       - ./config:/opt/stellar
     env_file:
       - .env
     restart: always
 
-  # stellar-horizon-node-instance-pubnet2:
-  #   ports:
-  #     - "9000:8000"
-  #   image: jideotetic/stellar-horizon-node-instance-pubnet:latest
-  #   volumes:
-  #     - ./config:/opt/stellar
-  #   env_file:
-  #     - .env
-  #   restart: always
+  stellar-horizon-node-instance-pubnet2:
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+      postgres:
+        condition: service_healthy
+    ports:
+      - "9000:8000"
+    image: stellar-horizon-node-instance-pubnet
+    volumes:
+      - ./config:/opt/stellar
+    env_file:
+      - .env
+    restart: always
 
-  # stellar-horizon-node-instance-pubnet3:
-  #   ports:
-  #     - "9001:8000"
-  #   image: jideotetic/stellar-horizon-node-instance-pubnet:latest
-  #   volumes:
-  #     - ./config:/opt/stellar
-  #   env_file:
-  #     - .env
-  #   restart: always
+  stellar-horizon-node-instance-pubnet3:
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+      postgres:
+        condition: service_healthy
+    ports:
+      - "9001:8000"
+    image: stellar-horizon-node-instance-pubnet
+    volumes:
+      - ./config:/opt/stellar
+    env_file:
+      - .env
+    restart: always
